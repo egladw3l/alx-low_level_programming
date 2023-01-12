@@ -1,39 +1,51 @@
 #include "main.h"
-#include <string.h>
-#include <stdlib.h>
+
 /**
- * string_nconcat - join 2 strings together
- * @s1: string 1
- * @s2: string 2
- * @n: size to copy
- * Return: pointer to the final string
+ * string_nconcat - concatenates two strings.
+ * @s1: first string
+ * @s2: second string
+ * @n: index
+ * Return: char pointer
  */
+
 char *string_nconcat(char *s1, char *s2, unsigned int n)
 {
-	char *str, *str1, *str2;
-	unsigned int i, len1, len2;
+	char *p;
+	unsigned int size1 = 0, size2 = 0, i;
 
-	str1 = strdup(s1);
-	str2 = strdup(s2);
-	len1 = strlen(str1);
-	len2 = strlen(str2);
-	if (str1 == NULL)
-		str1 = "";
-	if (str2 == NULL)
-		str2 = "";
-	if (n >= len2)
+	if (s1 == NULL)
+		s1 = "";
+
+	if (s2 == NULL)
+		s2 = "";
+
+	while (s1[size1] != '\0')
 	{
-		str = (char *)malloc((len1 + len2 + 1) * sizeof(char));
-		for (i = 0; i < (len1 + len2); i++)
-		{
-			if (i < len1)
-				*(str + i) = str1[i];
-			else
-				*(str + i) = str2[i - len1];
-		}
-		*(str + i) = '\0';
-		return (str);
+		size1++;
 	}
-	strncat(str1, str2, n);
-	return (str1);
+
+	while (s2[size2] != '\0')
+	{
+		size2++;
+	}
+
+	if (n > size2)
+	n = size2;
+	p = malloc((size1 + n + 1) * sizeof(char));
+
+	if (p == NULL)
+		return (0);
+
+	for (i = 0; i < size1; i++)
+	{
+		p[i] = s1[i];
+	}
+
+	for (; i < (size1 + n); i++)
+	{
+		p[i] = s2[i - size1];
+	}
+	p[i] = '\0';
+
+return (p);
 }
